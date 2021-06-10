@@ -16,14 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Admin routes
-Route::middleware(Admin::class)->group(function () {
-    Route::get('/admin', [AdminController::class, 'index']);
-});
-//Teacher routes
-Route::middleware(['auth'])->group(function () {
-
-});
 //Guest routes
 
 Route::get('/', function () {
@@ -33,3 +25,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Admin routes
+Route::middleware(Admin::class)->group(function () {
+    Route::get('/admin', [AdminController::class, 'index']);
+});
+//Teacher routes
+Route::middleware(['auth'])->group(function () {
+
+});
