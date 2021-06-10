@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Middleware\Admin;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Admin routes
+Route::middleware(Admin::class)->group(function () {
+    Route::get('/admin', [AdminController::class, 'index']);
+});
+//Teacher routes
+Route::middleware(['auth'])->group(function () {
+
+});
+//Guest routes
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
