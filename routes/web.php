@@ -27,7 +27,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 //Admin routes
 Route::middleware(Admin::class)->group(function () {
+    //home page
     Route::get('/admin', [AdminController::class, 'index']);
+    //add student page
+    Route::get('/admin/addStudent', [AdminController::class, 'addStudent']);
 });
 //Teacher routes
 Route::middleware(['auth'])->group(function () {
