@@ -31,6 +31,7 @@ Route::middleware(Admin::class)->group(function () {
     Route::get('/admin', [AdminController::class, 'index']);
     //add student page
     Route::get('/admin/addStudent', [AdminController::class, 'addStudent']);
+    Route::post('/admin/addStudent', [AdminController::class, 'addStudentAdd']);
 });
 //Teacher routes
 Route::middleware(['auth'])->group(function () {
