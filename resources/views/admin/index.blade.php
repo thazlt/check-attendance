@@ -21,6 +21,8 @@
                     @endif
                     <br>
                     <a href="{{ url('/admin/addStudent') }}">Add a Student</a>
+                    <br>
+                    <a href="{{ url('/admin/createClass') }}">Create a class</a>
                 </div>
             </div>
         </div>

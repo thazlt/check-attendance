@@ -14,7 +14,10 @@ class CreateMyClassesTable extends Migration
     public function up()
     {
         Schema::create('my_classes', function (Blueprint $table) {
-            $table->id();
+            $table->id('classID');
+            $table->string('name');
+            $table->date('begin');
+            $table->date('end');
             $table->timestamps();
         });
     }

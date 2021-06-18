@@ -9,7 +9,7 @@ class Student extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'userID';
+    protected $primaryKey = 'studentID';
 
     /**
      * The attributes that are mass assignable.
