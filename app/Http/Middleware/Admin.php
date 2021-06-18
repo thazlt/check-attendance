@@ -17,6 +17,9 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
+        if(Auth::user() == null){
+            abort(403);
+        }
         $role = Auth::user()->userType;
         if ($role != 0) {
             abort(403);

@@ -19,6 +19,8 @@
                         <br>
                         <a href="{{ route('register') }}">Register new Teacher</a>
                     @endif
+                    <br>
+                    <a href="{{ url('/admin/addStudent') }}">Add a Student</a>
                 </div>
             </div>
         </div>
