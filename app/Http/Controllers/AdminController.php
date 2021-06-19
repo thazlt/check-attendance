@@ -21,7 +21,7 @@ class AdminController extends Controller
 
     //Add student page
     public function addStudent(){
-        return view('admin.addstudent');
+        return view('admin.studentmanage.addstudent');
     }
 
     public function addStudentAdd(Request $rq){
@@ -51,7 +51,7 @@ class AdminController extends Controller
     }
     //create classes
     public function createClass(){
-        return view('admin.createClass');
+        return view('admin.classmanage.createClass');
     }
 
     public function createClassAdd(Request $rq){
