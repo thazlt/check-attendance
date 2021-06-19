@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -20,10 +21,16 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', function () {
-    return redirect('/login');
+    if(!isset(Auth::user()->userType)){
+        return redirect('/login');
+    }
+    if(Auth::user()->userType == 0){
+        return redirect('/admin');
+    }
+    if(Auth::user()->userType == 1){
+        return redirect('/teacher');
+    }
 });
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Admin routes
 Route::middleware(Admin::class)->group(function () {
@@ -38,9 +45,9 @@ Route::middleware(Admin::class)->group(function () {
 });
 //Teacher routes
 Route::middleware(['auth'])->group(function () {
-
+    Route::get('/teacher', [TeacherController::class, 'index']);
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
