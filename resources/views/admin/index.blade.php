@@ -13,16 +13,25 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     {{ __('You are logged in! '. Auth::user()->name) }}
                     @if (Route::has('register'))
-                        <br>
-                        <a href="{{ route('register') }}">Register new Teacher</a>
+                        <h4>Teacher Management</h4>
+                        <a href="{{ route('register') }}">Register new Teacher</a><br>
+                        <a href="#">Teachers list</a><br>
+                        <a href="#">Deactivate a teacher</a><br>
+                        <a href="#">Reactivate a teacher</a><br>
                     @endif
                     <br>
-                    <a href="{{ url('/admin/addStudent') }}">Add a Student</a>
+                    <h4>Student Management</h4>
+                    <a href="{{ url('/admin/addStudent') }}">Add a Student</a><br>
+                    <a href="">Student list</a><br>
+                    <a href="">Deactivate a student</a><br>
+                    <a href="">Reactivate a student</a><br>
                     <br>
-                    <a href="{{ url('/admin/createClass') }}">Create a class</a>
+                    <h4>Class Management</h4>
+                    <a href="{{ url('/admin/createClass') }}">Create a class</a><br>
+                    <a href="#">Class list</a><br>
+                    <a href="#">Delete a class</a><br>
                 </div>
             </div>
         </div>
