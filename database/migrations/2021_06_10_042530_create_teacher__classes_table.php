@@ -14,7 +14,10 @@ class CreateTeacherClassesTable extends Migration
     public function up()
     {
         Schema::create('teacher__classes', function (Blueprint $table) {
-            $table->id();
+            $table->integer('teacherID');
+            $table->integer('classID');
+            $table->foreign('teacherID')->references('userID')->on('users');
+            $table->foreign('classID')->references('classID')->on('classes');
             $table->timestamps();
         });
     }
