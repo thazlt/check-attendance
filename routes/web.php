@@ -44,6 +44,11 @@ Route::middleware(Admin::class)->group(function () {
     Route::post('/admin/createClass', [AdminController::class, 'createClassAdd']);
     //view class list
     Route::get('/admin/viewAllClasses', [AdminController::class, 'viewAllClasses']);
+    //view 1 class
+    Route::get('/admin/viewClass/{id}', [AdminController::class, 'viewClass']);
+    //add teacher to class
+    Route::get('/admin/addTeacher/{id}', [AdminController::class, 'addTeacher']);
+    Route::post('/admin/addTeacherToClass', [AdminController::class, 'addTeacherToClass']);
 });
 //Teacher routes
 Route::middleware(['auth'])->group(function () {

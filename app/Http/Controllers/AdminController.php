@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Middleware\Admin;
 use App\Models\MyClass;
 use App\Models\Student;
+use App\Models\TeacherClass;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 
@@ -84,7 +85,36 @@ class AdminController extends Controller
     }
 
     public function viewClass(Request $rq){
-        $class = MyClass::where('classID', $rq->id)->first;
-        return view('teacher.viewClass');
+        $class = MyClass::where('classID', $rq->id)->first();
+        return view('admin.classmanage.viewClass')->with([
+            'class'=>$class
+        ]);
+    }
+    public function addTeacher(Request $rq){
+        $class = MyClass::where('classID', $rq->id)->first();
+        return view('admin.classmanage.addTeacher')->with([
+            'class'=>$class
+        ]);
+    }
+    public function addTeacherToClass(Request $rq){
+        //validate
+        //get teacher's id in the class
+        $class = MyClass::where('classID', $rq->classID)->first();
+        foreach($class->teachers as $teacher){
+            $invalidID[] = $teacher->userID;
+        }
+        $rq->validate([
+            'teacherID'=>['required', 'exists:users,userID', 'not_in:'.implode(',', $invalidID)],
+        ]);
+        $teacher_class = new TeacherClass();
+        $teacher_class->teacherID = $rq->teacherID;
+        $teacher_class->classID = $rq->classID;
+        if($teacher_class->save()){
+            $rq->session()->put('status', 'Add teacher successfully');
+        }
+        else{
+            $rq->session()->put('error', 'An error has occured');
+        }
+        return redirect(url('/admin/viewClass/'.$rq->classID));
     }
 }

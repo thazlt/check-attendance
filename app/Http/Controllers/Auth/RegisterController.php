@@ -66,6 +66,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        session()->put('status', 'Create teacher\'s account successfully');
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
