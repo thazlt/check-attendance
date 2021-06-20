@@ -40,4 +40,7 @@ class MyClass extends Model
         'begin' => 'date',
         'end' => 'date',
     ];
+    public function teachers(){
+        return $this->belongsToMany(User::class, 'teacher_class', 'classID', 'teacherID');
+    }
 }
