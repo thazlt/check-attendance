@@ -13,8 +13,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    {{ __('You are logged in!') }}
+                    <h5>Welcome, {{ $teacher->name }} !!!</h5>
+                    <h4>Class list:</h4>
+                    @foreach ($classes as $class)
+                        <a href="#">{{ $class->name }}</a><br>
+                    @endforeach
                 </div>
             </div>
         </div>
