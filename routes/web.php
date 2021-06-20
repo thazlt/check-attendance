@@ -42,6 +42,8 @@ Route::middleware(Admin::class)->group(function () {
     //creat class page
     Route::get('/admin/createClass', [AdminController::class, 'createClass']);
     Route::post('/admin/createClass', [AdminController::class, 'createClassAdd']);
+    //view class list
+    Route::get('/admin/viewAllClasses', [AdminController::class, 'viewAllClasses']);
 });
 //Teacher routes
 Route::middleware(['auth'])->group(function () {
