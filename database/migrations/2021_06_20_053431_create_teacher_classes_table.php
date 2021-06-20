@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserMyClassesTable extends Migration
+class CreateTeacherClassesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUserMyClassesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_my_class', function (Blueprint $table) {
+        Schema::create('teacher_class', function (Blueprint $table) {
             $table->integer('teacherID');
             $table->integer('classID');
             $table->primary(['teacherID', 'classID']);
@@ -30,6 +30,6 @@ class CreateUserMyClassesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_my_class');
+        Schema::dropIfExists('teacher_class');
     }
 }
