@@ -10,7 +10,7 @@
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                            {{ session()->pull('status') }}
                         </div>
                     @endif
                     {{ __('You are logged in! '. Auth::user()->name) }}
@@ -30,7 +30,7 @@
                     <br>
                     <h4>Class Management</h4>
                     <a href="{{ url('/admin/createClass') }}">Create a class</a><br>
-                    <a href="#">Class list</a><br>
+                    <a href="{{ url('/admin/viewAllClasses') }}">Class list</a><br>
                     <a href="#">Delete a class</a><br>
                 </div>
             </div>

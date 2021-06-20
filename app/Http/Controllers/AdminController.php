@@ -76,8 +76,10 @@ class AdminController extends Controller
         }
         return redirect('/admin');
     }
-    public function viewAllClass(){
-        $classes = MyClass::select();
-        dd($classes);
+    public function viewAllClasses(){
+        $classes = MyClass::all();
+        return view('admin.classmanage.viewAllClasses')->with([
+            'classes'=>$classes,
+        ]);
     }
 }
