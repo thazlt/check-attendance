@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTeacherClassesTable extends Migration
+class CreateUserMyClassesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateTeacherClassesTable extends Migration
      */
     public function up()
     {
-        Schema::create('teacher__classes', function (Blueprint $table) {
+        Schema::create('user_my_class', function (Blueprint $table) {
             $table->integer('teacherID');
             $table->integer('classID');
+            $table->primary(['teacherID', 'classID']);
+            $table->timestamps();
             $table->foreign('teacherID')->references('userID')->on('users');
             $table->foreign('classID')->references('classID')->on('classes');
-            $table->timestamps();
         });
     }
 
@@ -29,6 +30,6 @@ class CreateTeacherClassesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('teacher__classes');
+        Schema::dropIfExists('user_my_class');
     }
 }
