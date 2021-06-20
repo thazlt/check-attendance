@@ -82,4 +82,9 @@ class AdminController extends Controller
             'classes'=>$classes,
         ]);
     }
+
+    public function viewClass(Request $rq){
+        $class = MyClass::where('classID', $rq->id)->first;
+        return view('teacher.viewClass');
+    }
 }
