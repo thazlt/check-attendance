@@ -18,6 +18,7 @@ class CreateMyClassesTable extends Migration
             $table->string('name');
             $table->date('begin');
             $table->date('end');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
