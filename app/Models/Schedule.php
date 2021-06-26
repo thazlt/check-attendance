@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Schedule extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'scheduleID';
+
+    protected $fillable = [
+        'classID',
+        'date'
+    ];
+    protected $cast = [
+        'date' => 'date',
+    ];
 }
