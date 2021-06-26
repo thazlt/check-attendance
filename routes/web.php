@@ -49,7 +49,8 @@ Route::middleware(Admin::class)->group(function () {
     //add teacher to class
     Route::get('/admin/addTeacher/{id}', [AdminController::class, 'addTeacher']);
     Route::post('/admin/addTeacherToClass', [AdminController::class, 'addTeacherToClass']);
-
+    //remove teacher from class
+    Route::post('/admin/removeTeacher', [AdminController::class, 'removeTeacher']);
     //deactivate class
     Route::post('/admin/deactivateClass',[AdminController::class, 'deactivateClass']);
     Route::post('/admin/activateClass',[AdminController::class, 'activateClass']);

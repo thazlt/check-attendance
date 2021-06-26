@@ -119,6 +119,15 @@ class AdminController extends Controller
         return redirect(url('/admin/viewClass/'.$rq->classID));
     }
 
+    public function removeTeacher(Request $rq){
+        $classID = $rq->get('classID');
+        $userID = $rq->get('userID');
+        //$teacher_class = TeacherClass::select()->where('classID', $classID)->where('teacherID',$userID)->first()->delete();
+        $teacher_class = TeacherClass::where('classID', $classID)->where('teacherID',$userID)->delete();
+        $rq->session()->put('status', 'Remove succesfully');
+        return redirect("/admin/viewClass/".$classID);
+    }
+
     public function deactivateClass(Request $rq){
         $rq->validate(
             ['classID' => 'exists:my_classes,classID',]
@@ -127,7 +136,7 @@ class AdminController extends Controller
         $class->status = false;
         $class->save();
         $rq->session()->put('status','Class '. $class->name . ' deactivated');
-        return redirect(url('/admin'));
+        return redirect(url('/admin/viewClass/'.$rq->classID));
     }
     public function activateClass(Request $rq){
         $rq->validate(
@@ -137,6 +146,6 @@ class AdminController extends Controller
         $class->status = true;
         $class->save();
         $rq->session()->put('status','Class '. $class->name . ' activated');
-        return redirect(url('/admin'));
+        return redirect(url('/admin/viewClass/'.$rq->classID));
     }
 }
