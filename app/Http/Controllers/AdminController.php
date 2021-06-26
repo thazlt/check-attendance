@@ -118,4 +118,25 @@ class AdminController extends Controller
         }
         return redirect(url('/admin/viewClass/'.$rq->classID));
     }
+
+    public function deactivateClass(Request $rq){
+        $rq->validate(
+            ['classID' => 'exists:my_classes,classID',]
+        );
+        $class = MyClass::where('classID','=',$rq->get('classID'))->first();
+        $class->status = false;
+        $class->save();
+        $rq->session()->put('status','Class '. $class->name . ' deactivated');
+        return redirect(url('/admin'));
+    }
+    public function activateClass(Request $rq){
+        $rq->validate(
+            ['classID' => 'exists:my_classes,classID',]
+        );
+        $class = MyClass::where('classID','=',$rq->get('classID'))->first();
+        $class->status = true;
+        $class->save();
+        $rq->session()->put('status','Class '. $class->name . ' activated');
+        return redirect(url('/admin'));
+    }
 }
