@@ -36,6 +36,10 @@ Route::get('/', function () {
 Route::middleware(Admin::class)->group(function () {
     //home page
     Route::get('/admin', [AdminController::class, 'index']);
+    //view Students
+    Route::get('/admin/viewStudents', [AdminController::class, 'viewStudents']);
+    //view Teachers
+    Route::get('/admin/viewTeachers', [AdminController::class, 'viewTeachers']);
     //add student page
     Route::get('/admin/addStudent', [AdminController::class, 'addStudent']);
     Route::post('/admin/addStudent', [AdminController::class, 'addStudentAdd']);

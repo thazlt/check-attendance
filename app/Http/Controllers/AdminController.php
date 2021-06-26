@@ -6,6 +6,7 @@ use App\Http\Middleware\Admin;
 use App\Models\MyClass;
 use App\Models\Student;
 use App\Models\TeacherClass;
+use App\Models\User;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,20 @@ class AdminController extends Controller
     public function index(){
         return view('admin.index');
     }
-
+    //View all Students
+    public function viewStudents(){
+        $students = Student::select()->get();
+        return view('admin.studentmanage.index')->with([
+            'students'=>$students,
+        ]);
+    }
+    //View all Teachers
+    public function viewTeachers(){
+        $teachers = User::select()->where('userType', 1)->get();
+        return view('admin.teachermanage.index')->with([
+            'teachers'=>$teachers,
+        ]);
+    }
     //Add student page
     public function addStudent(){
         return view('admin.studentmanage.addstudent');

@@ -17,21 +17,16 @@
                     @if (Route::has('register'))
                         <h4>Teacher Management</h4>
                         <a href="{{ route('register') }}">Register new Teacher</a><br>
-                        <a href="#">Teachers list</a><br>
-                        <a href="#">Deactivate a teacher</a><br>
-                        <a href="#">Reactivate a teacher</a><br>
+                        <a href="{{ url('/admin/viewTeachers') }}">Teachers list</a><br>
                     @endif
                     <br>
                     <h4>Student Management</h4>
                     <a href="{{ url('/admin/addStudent') }}">Add a Student</a><br>
-                    <a href="">Student list</a><br>
-                    <a href="">Deactivate a student</a><br>
-                    <a href="">Reactivate a student</a><br>
+                    <a href="{{ url('/admin/viewStudents') }}">Student list</a><br>
                     <br>
                     <h4>Class Management</h4>
                     <a href="{{ url('/admin/createClass') }}">Create a class</a><br>
                     <a href="{{ url('/admin/viewAllClasses') }}">Class list</a><br>
-                    <a href="#">Delete a class</a><br>
                 </div>
             </div>
         </div>
