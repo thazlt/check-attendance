@@ -19,7 +19,7 @@ class CreateTeacherClassesTable extends Migration
             $table->primary(['teacherID', 'classID']);
             $table->timestamps();
             $table->foreign('teacherID')->references('userID')->on('users');
-            $table->foreign('classID')->references('classID')->on('classes');
+            $table->foreign('classID')->references('classID')->on('my_classes');
         });
     }
 
