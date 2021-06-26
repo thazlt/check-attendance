@@ -19,8 +19,8 @@
                         <form action="{{ url('/admin/removeTeacher') }}" method="post">
                             @csrf
                             <input type="hidden" name="classID" value="{{ $class->classID }}">
-                            <input type="hidden" name="classID" value="{{ $class->$teacher->userID }}">
-                            <button type="submit">Deactivate Class</button>
+                            <input type="hidden" name="userID" value="{{ $teacher->userID }}">
+                            <button type="submit">Remove</button>
                         </form>
                     @endforeach
                     @if ($class->status == 1)
