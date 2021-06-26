@@ -8,6 +8,11 @@
                 <div class="card-header">{{ __('Student List') }}</div>
 
                 <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session()->pull('status') }}
+                        </div>
+                    @endif
                     <table>
                         <tr>
                             <th>ID</th>
