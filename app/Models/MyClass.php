@@ -20,6 +20,7 @@ class MyClass extends Model
         'name',
         'begin',
         'end',
+        'status',
     ];
 
     /**
