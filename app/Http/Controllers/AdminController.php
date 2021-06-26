@@ -100,6 +100,7 @@ class AdminController extends Controller
         //validate
         //get teacher's id in the class
         $class = MyClass::where('classID', $rq->classID)->first();
+        $invalidID = [];
         foreach($class->teachers as $teacher){
             $invalidID[] = $teacher->userID;
         }
