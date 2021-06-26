@@ -38,6 +38,16 @@
                     </form>
                     @endif
                     <h4>Status: {{ $class->status == 1 ? "Active" : "Disabled" }}</h4>
+                    <h4>Time Table</h4>
+                    <table>
+                        <tr>
+                            <th>Students</th>
+                            <th>Name</th>
+                            @foreach ($class->schedules() as $schedule)
+                                <th>{{ $schedule->date }}</th>
+                            @endforeach
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
