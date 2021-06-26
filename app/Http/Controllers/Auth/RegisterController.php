@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Middleware\Admin;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
