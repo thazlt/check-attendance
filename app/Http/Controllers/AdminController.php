@@ -18,28 +18,17 @@ class AdminController extends Controller
     }
     //home page
     public function index(){
-        return view('admin.index');
-    }
-    //View all Students
-    public function viewStudents(){
-        $students = Student::select()->get();
-        return view('admin.studentmanage.index')->with([
-            'students'=>$students,
-        ]);
-    }
-    //View all Teachers
-    public function viewTeachers(){
-        $teachers = User::select()->where('userType', 1)->get();
-        return view('admin.teachermanage.index')->with([
+        $classes = MyClass::all();
+        $students = Student::all();
+        $teachers = User::all()->where('userType', 1);
+        return view('admin.index')->with([
+            'classes' => $classes,
+            'students' => $students,
             'teachers'=>$teachers,
         ]);
     }
-    //Add student page
-    public function addStudent(){
-        return view('admin.studentmanage.addstudent');
-    }
 
-    public function addStudentAdd(Request $rq){
+    public function addStudent(Request $rq){
         //validate
         $rq->validate([
             'name'=>'required',
@@ -62,7 +51,7 @@ class AdminController extends Controller
             $rq->session()->put('status', 'An error has occured');
         }
 
-        return redirect('/admin');
+        return redirect('/admin#v-pills-students');
     }
     //create classes
     public function createClass(){
@@ -90,12 +79,6 @@ class AdminController extends Controller
             $rq->session()->put('status', 'An error has occured');
         }
         return redirect('/admin');
-    }
-    public function viewAllClasses(){
-        $classes = MyClass::all();
-        return view('admin.classmanage.viewAllClasses')->with([
-            'classes'=>$classes,
-        ]);
     }
 
     public function viewClass(Request $rq){
