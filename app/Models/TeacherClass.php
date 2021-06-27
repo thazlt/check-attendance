@@ -13,4 +13,7 @@ class TeacherClass extends Model
         'teacherID',
         'classID',
     ];
+    protected $primaryKey = null;
+
+    public $incrementing = false;
 }
