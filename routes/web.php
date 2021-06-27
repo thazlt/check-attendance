@@ -60,7 +60,7 @@ Route::middleware(Admin::class)->group(function () {
     //add a learning date
     Route::post('/admin/addSchedule', [AdminController::class, 'addSchedule']);
     //reomve a learning date
-    Route::post('/admin/removeSchedule', [AdminController::class, 'remove Schedule']);
+    Route::post('/admin/removeSchedule', [AdminController::class, 'removeSchedule']);
 
     //activate and deactivate class
     Route::post('/admin/deactivateClass',[AdminController::class, 'deactivateClass']);

@@ -14,7 +14,7 @@ class Schedule extends Model
         'classID',
         'date'
     ];
-    protected $cast = [
+    protected $casts = [
         'date' => 'date',
     ];
 }

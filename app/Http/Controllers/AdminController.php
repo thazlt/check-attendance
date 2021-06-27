@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\Admin;
 use App\Models\MyClass;
+use App\Models\Schedule;
 use App\Models\Student;
+use App\Models\StudentClass;
 use App\Models\TeacherClass;
 use App\Models\User;
 use Illuminate\Contracts\Session\Session;
@@ -54,11 +56,7 @@ class AdminController extends Controller
         return redirect('/admin#v-pills-students');
     }
     //create classes
-    public function createClass(){
-        return view('admin.classmanage.createClass');
-    }
-
-    public function createClassAdd(Request $rq){
+    public function createClass(Request $rq){
         //validate
         $rq->validate([
             'name'=>'required',
@@ -80,22 +78,18 @@ class AdminController extends Controller
         }
         return redirect('/admin');
     }
-
+    //Class Manage
     public function viewClass(Request $rq){
         $class = MyClass::where('classID', $rq->id)->first();
         return view('admin.classmanage.viewClass')->with([
             'class'=>$class
         ]);
     }
+
     public function addTeacher(Request $rq){
-        $class = MyClass::where('classID', $rq->id)->first();
-        return view('admin.classmanage.addTeacher')->with([
-            'class'=>$class
-        ]);
-    }
-    public function addTeacherToClass(Request $rq){
         //validate
         //get teacher's id in the class
+        var_dump($rq->classID);
         $class = MyClass::where('classID', $rq->classID)->first();
         $invalidID = [];
         foreach($class->teachers as $teacher){
@@ -119,10 +113,72 @@ class AdminController extends Controller
     public function removeTeacher(Request $rq){
         $classID = $rq->get('classID');
         $userID = $rq->get('userID');
-        //$teacher_class = TeacherClass::select()->where('classID', $classID)->where('teacherID',$userID)->first()->delete();
         $teacher_class = TeacherClass::where('classID', $classID)->where('teacherID',$userID)->delete();
         $rq->session()->put('status', 'Remove succesfully');
         return redirect("/admin/viewClass/".$classID);
+    }
+
+    public function addStudentClass(Request $rq){
+        //validate
+        //get student's id in the class
+        $class = MyClass::where('classID', $rq->classID)->first();
+        $invalidID = [];
+        foreach($class->students as $student){
+            $invalidID[] = $student->studentID;
+        }
+        $rq->validate([
+            'studentID'=>['required', 'exists:students,studentID', 'not_in:'.implode(',', $invalidID)],
+        ]);
+        //add to class
+        $student_class = new StudentClass();
+        $student_class->studentID = $rq->studentID;
+        $student_class->classID = $rq->classID;
+        if($student_class->save()){
+            $rq->session()->put('status', 'Add student successfully');
+        }
+        else{
+            $rq->session()->put('error', 'An error has occured');
+        }
+        return redirect(url('/admin/viewClass/'.$rq->classID));
+    }
+
+    public function removeStudentClass(Request $rq){
+        $classID = $rq->get('classID');
+        $studentID = $rq->get('studentID');
+        $student_class = StudentClass::where('classID', $classID)->where('studentID',$studentID)->delete();
+        $rq->session()->put('status', 'Remove succesfully');
+        return redirect("/admin/viewClass/".$classID);
+    }
+
+    public function addSchedule(Request $rq){
+        //validate
+        //schedules between begin and end date, not existed
+        $class = MyClass::where('classID', $rq->classID)->first();
+        $invalid = [];
+        foreach($class->schedules as $schedule){
+            $invalid[] = date('d-m-Y', strtotime($schedule->date->toDateString()));
+        }
+        $rq->validate([
+            'date'=>['required', 'not_in:'.implode(',', $invalid), 'after_or_equal:'.date('d-m-Y', strtotime($class->begin->toDateString())), 'before_or_equal:'.date('d-m-Y', strtotime($class->end->toDateString()))],
+        ]);
+        //add to schedules
+        $schedule = new Schedule();
+        $schedule->classID = $rq->classID;
+        $schedule->date = $rq->date;
+        if($schedule->save()){
+            $rq->session()->put('status', 'Schedule updated');
+        }
+        else{
+            $rq->session()->put('status', 'An error has occured');
+        }
+        return redirect(url('/admin/viewClass/'.$rq->classID));
+    }
+
+    public function removeSchedule(Request $rq){
+        $scheduleID = $rq->get('scheduleID');
+        Schedule::where('scheduleID', $scheduleID)->delete();
+        $rq->session()->put('status', 'Remove succesfully');
+        return redirect("/admin/viewClass/".$rq->classID);
     }
 
     public function deactivateClass(Request $rq){
