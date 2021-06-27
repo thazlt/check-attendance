@@ -37,22 +37,22 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $num = 1?>
+                                @foreach ($classes as $class)
                                 <tr>
-                                    <?php $num = 1?>
-                                    @foreach ($classes as $class)
-                                        <td>{{ $num }}</td>
-                                        <td>{{ $class->classID }}</td>
-                                        <td>{{ $class->name }}</td>
-                                        <td>40</td>
-                                        <td>
-                                            @foreach ($class->teachers as $teacher)
-                                                {{ $teacher->name.", " }}
-                                            @endforeach
-                                        </td>
-                                        <td><button class="btn btn-outline" onclick="location.href='checkatt.html';"><i class="fa fa-pencil"></i></button>
-                                            <button class="btn btn-outline"><i class="fa fa-trash"></i></button></td>
-                                    @endforeach
+                                    <td>{{ $num }}</td>
+                                    <td>{{ $class->classID }}</td>
+                                    <td>{{ $class->name }}</td>
+                                    <td>{{ $class->students->count() }}</td>
+                                    <td>
+                                        @foreach ($class->teachers as $teacher)
+                                            {{ $teacher->name.", " }}
+                                        @endforeach
+                                    </td>
+                                    <td><button class="btn btn-outline" onclick="location.href='{{ url('/admin/viewClass/'.$class->classID) }}';"><i class="fa fa-pencil"></i></button>
+                                        <button class="btn btn-outline"><i class="fa fa-trash"></i></button></td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -375,8 +375,10 @@
                                     <th>No</th>
                                     <th>Class ID</th>
                                     <th>Class Name</th>
+                                    <th>Number of Students</th>
                                     <th>Begin</th>
                                     <th>End</th>
+                                    <th>Teachers</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -387,8 +389,14 @@
                                         <td>{{ $num }}</td>
                                         <td>{{ $class->classID }}</td>
                                         <td>{{ $class->name }}</td>
-                                        <td>{{ $class->begin }}</td>
-                                        <td>{{ $class->end }}</td>
+                                        <td>{{ $class->students->count() }}</td>
+                                        <td>{{ $class->begin->toDateString() }}</td>
+                                        <td>{{ $class->end->toDateString() }}</td>
+                                        <td>
+                                            @foreach ($class->teachers as $teacher)
+                                            {{ $teacher->name.", " }}
+                                        @endforeach
+                                        </td>
                                         <td><button class="btn btn-outline" onclick="location.href='checkatt.html';"><i class="fa fa-pencil"></i></button>
                                         <button class="btn btn-outline"><i class="fa fa-trash"></i></button></td>
                                     </tr>
