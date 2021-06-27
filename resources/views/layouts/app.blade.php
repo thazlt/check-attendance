@@ -78,9 +78,7 @@
             </ul>
         </div>
     </div>
-    <main>
-        @yield('content')
-    </main>
+    @yield('content')
 
 </body>
 
