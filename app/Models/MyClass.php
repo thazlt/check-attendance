@@ -47,4 +47,7 @@ class MyClass extends Model
     public function schedules(){
         return $this->hasMany(Schedule::class, 'classID', 'classID');
     }
+    public function students(){
+        return $this->belongsToMany(Student::class, 'student_class', 'classID', 'studentID', 'classID', 'studentID');
+    }
 }
