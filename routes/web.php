@@ -36,24 +36,32 @@ Route::get('/', function () {
 Route::middleware(Admin::class)->group(function () {
     //home page
     Route::get('/admin', [AdminController::class, 'index']);
-    //view Students
-    Route::get('/admin/viewStudents', [AdminController::class, 'viewStudents']);
-    //view Teachers
-    Route::get('/admin/viewTeachers', [AdminController::class, 'viewTeachers']);
-    //add student page
+    //Add student to system
     Route::post('/admin/addStudent', [AdminController::class, 'addStudent']);
-    //creat class page
-    Route::get('/admin/createClass', [AdminController::class, 'createClass']);
-    Route::post('/admin/createClass', [AdminController::class, 'createClassAdd']);
-    //view class list
-    Route::get('/admin/viewAllClasses', [AdminController::class, 'viewAllClasses']);
-    //view 1 class
+    //view class
     Route::get('/admin/viewClass/{id}', [AdminController::class, 'viewClass']);
+
+    //Class Mangage
+    Route::post('/admin/createClass', [AdminController::class, 'createClass']);
+
+    //Teacher Mangage
     //add teacher to class
-    Route::get('/admin/addTeacher/{id}', [AdminController::class, 'addTeacher']);
-    Route::post('/admin/addTeacherToClass', [AdminController::class, 'addTeacherToClass']);
+    Route::post('/admin/addTeacher', [AdminController::class, 'addTeacher']);
     //remove teacher from class
     Route::post('/admin/removeTeacher', [AdminController::class, 'removeTeacher']);
+
+    //Student Manage
+    //add student to class
+    Route::post('/admin/addStudentClass', [AdminController::class, 'addStudentClass']);
+    //remove student from class
+    Route::post('/admin/removeStudentClass', [AdminController::class, 'removeStudentClass']);
+
+    //Schedule Manage
+    //add a learning date
+    Route::post('/admin/addSchedule', [AdminController::class, 'addSchedule']);
+    //reomve a learning date
+    Route::post('/admin/removeSchedule', [AdminController::class, 'remove Schedule']);
+
     //activate and deactivate class
     Route::post('/admin/deactivateClass',[AdminController::class, 'deactivateClass']);
     Route::post('/admin/activateClass',[AdminController::class, 'activateClass']);
