@@ -40,4 +40,7 @@ class Student extends Model
     protected $casts = [
         'dob' => 'date',
     ];
+    public function classes(){
+        return $this->hasManyThrough(MyClass::class, 'student_class', 'studentID', 'classID', 'studentID', 'classID');
+    }
 }
