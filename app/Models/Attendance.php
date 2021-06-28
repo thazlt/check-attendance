@@ -13,6 +13,7 @@ class Attendance extends Model
     protected $fillable = [
         'scheduleID',
         'studentID',
+        'status',
     ];
 
     public function schedule(){
