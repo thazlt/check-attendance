@@ -41,9 +41,9 @@ class Student extends Model
         'dob' => 'date',
     ];
     public function classes(){
-        return $this->hasManyThrough(MyClass::class, 'student_class', 'studentID', 'classID', 'studentID', 'classID');
+        return $this->hasManyThrough(MyClass::class, StudentClass::class, 'studentID', 'classID', 'studentID', 'classID');
     }
-    public function attendance(){
-        return $this->hasMany(Attendance::class, 'studentID', 'studentID');
+    public function schedules(){
+        return $this->belongsToMany(Schedule::class, 'attendances', 'studentID', 'scheduleID', 'studentID', 'scheduleID')->withPivot('status')->orderBy('date');
     }
 }

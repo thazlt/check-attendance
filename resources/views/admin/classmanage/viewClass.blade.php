@@ -162,16 +162,32 @@
                                 <thead>
                                     <tr>
                                         @foreach ($class->schedules->sortBy('date') as $schedule)
-                                           <td>{{ $schedule->date }}</td>
+                                           <td>{{ $schedule->date->toDateString('d-m-Y') }}</td>
                                         @endforeach
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        @foreach ($class->schedules->sortBy('date') as $schedule)
-                                            <td><button class="btn btn-success">V</button></td>
-                                        @endforeach
-                                    </tr>
+                                    @foreach ($class->students as $student)
+                                        <tr>
+                                            @foreach ($student->schedules as $schedule)
+                                                @if ($schedule->classID == $class->classID)
+                                                    @switch($schedule->pivot->status)
+                                                        @case('A')
+                                                            <td><button class="btn btn-danger">A</button></td>                                                            @break
+                                                        @case('P')
+                                                            <td><button class="btn btn-primary">P</button></td>
+                                                            @break
+                                                        @case('V')
+                                                            <td><button class="btn btn-success">V</button></td>
+                                                            @break
+                                                        @case('L')
+                                                            <td><button class="btn btn-warning">L</button></td>
+                                                            @break
+                                                    @endswitch
+                                                @endif
+                                            @endforeach
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

@@ -15,8 +15,4 @@ class Attendance extends Model
         'studentID',
         'status',
     ];
-
-    public function schedule(){
-        return $this->hasOne(Schedule::class, 'scheduleID', 'scheduleID');
-    }
 }

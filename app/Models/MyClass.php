@@ -45,7 +45,7 @@ class MyClass extends Model
         return $this->belongsToMany(User::class, 'teacher_class', 'classID', 'teacherID');
     }
     public function schedules(){
-        return $this->hasMany(Schedule::class, 'classID', 'classID');
+        return $this->hasMany(Schedule::class, 'classID', 'classID')->orderBy('date');
     }
     public function students(){
         return $this->belongsToMany(Student::class, 'student_class', 'classID', 'studentID', 'classID', 'studentID');
