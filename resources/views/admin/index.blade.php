@@ -4,7 +4,7 @@
 <div class="main-content">
     <div class="align-items-start">
         <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade show active" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">
+            <div class="tab-pane fade" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">
                 <header>
                     <h2>
                         <label for="nav-toggle">
