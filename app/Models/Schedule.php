@@ -17,4 +17,8 @@ class Schedule extends Model
     protected $casts = [
         'date' => 'date',
     ];
+
+    public function classes(){
+        return $this->hasOne(MyClass::class, 'classID', 'classID');
+    }
 }

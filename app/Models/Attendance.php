@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Attendance extends Model
 {
     use HasFactory;
+    protected $primaryKey = null;
+
+    protected $fillable = [
+        'scheduleID',
+        'studentID',
+    ];
+
+    public function schedule(){
+        return $this->hasOne(Schedule::class, 'scheduleID', 'scheduleID');
+    }
 }
