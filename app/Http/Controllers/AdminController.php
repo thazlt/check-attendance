@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\Admin;
+use App\Models\Attendance;
 use App\Models\MyClass;
 use App\Models\Schedule;
 use App\Models\Student;
@@ -179,6 +180,18 @@ class AdminController extends Controller
         Schedule::where('scheduleID', $scheduleID)->delete();
         $rq->session()->put('status', 'Remove succesfully');
         return redirect("/admin/viewClass/".$rq->classID);
+    }
+
+    //check attendance
+    public function checkAttendance(Request $rq){
+        $classID = $rq->classID;
+        $studentID = $rq->studentID;
+        $scheduleID = $rq->scheculeID;
+        $status = $rq->status;
+        $attendance = Attendance::where('scheduleID', $scheduleID)->where('studentID', $studentID)->first();
+        $attendance->status = $status;
+        $attendance->save();
+        return redirect("/admin/viewClass/".$classID);
     }
 
     public function deactivateClass(Request $rq){
