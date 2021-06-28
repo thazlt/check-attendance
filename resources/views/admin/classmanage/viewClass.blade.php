@@ -162,7 +162,15 @@
                                 <thead>
                                     <tr>
                                         @foreach ($class->schedules->sortBy('date') as $schedule)
-                                           <td>{{ $schedule->date->toDateString('d-m-Y') }}</td>
+                                           <td>
+                                               <form id="rmsc-{{ $class->classID }}-{{ $schedule->scheduleID }}" action="{{ url('admin/removeSchedule') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="classID" value="{{ $class->classID }}">
+                                                    <input type="hidden" name="scheduleID" value="{{ $schedule->scheduleID }}">
+                                                </form>
+                                               {{ $schedule->date->toDateString('d-m-Y') }}
+                                               <button type="submit" form="rmsc-{{ $class->classID }}-{{ $schedule->scheduleID }}"><i class="fa fa-trash"></i></button>
+                                            </td>
                                         @endforeach
                                     </tr>
                                 </thead>
