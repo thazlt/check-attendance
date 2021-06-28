@@ -188,6 +188,15 @@ class AdminController extends Controller
         else{
             $rq->session()->put('status', 'An error has occured');
         }
+        //add attendance to students
+        $students = $class->students;
+        foreach($students as $student){
+            $attendance = new Attendance();
+            $attendance->studentID = $student->studentID;
+            $attendance->scheduleID = $schedule->scheduleID;
+            $attendance->status = "A";
+            $attendance->save();
+        }
         return redirect(url('/admin/viewClass/'.$rq->classID));
     }
 
@@ -195,6 +204,13 @@ class AdminController extends Controller
         $scheduleID = $rq->get('scheduleID');
         Schedule::where('scheduleID', $scheduleID)->delete();
         $rq->session()->put('status', 'Remove succesfully');
+        $class = MyClass::where('classID', $rq->classID)->first();
+        $students = $class->students;
+        //delete all attendance
+        $students = $class->students;
+        foreach ($students as $student) {
+            $attendance = Attendance::where('studentID', $student->studentID)->where('scheduleID', $scheduleID)->delete();
+        }
         return redirect("/admin/viewClass/".$rq->classID);
     }
 
