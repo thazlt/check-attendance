@@ -2,12 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
+use App\Models\MyClass;
+use App\Models\Schedule;
+use App\Models\Student;
+use App\Models\StudentClass;
+use App\Models\TeacherClass;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TeacherController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function checkAtendance(Request $rq){
+        //validate
+        $scheduleID = $rq->scheduleID;
+        $studentID = $rq->studentID;
+        $status = $rq->status;
+        $teacherID  = Auth::user()->userID;
+        $errors = [];
+        //check if teacher is in class
+        $classID = Schedule::where('scheduleID', $scheduleID)->first()->classID;
+        if(!TeacherClass::where('classID', $classID)->where('teacherID', $teacherID)->first()){
+            $errors[]=['teacherError' => 'This teacher is not allowed to check attendace in this class'];
+        }
+        //check if student is in class
+        if(!StudentClass::where('studentID', $studentID)->where('classID', $classID)->first()){
+            $errors[]=['studentError' => 'This student is not in this class'];
+        }
+        //update the status
+        $attendance = Attendance::where('scheduleID', $scheduleID)->where('studentID', $studentID)->first();
+        $attendance->status = $status;
+        return $attendance->save();
+    }
+
     public function index(Request $rq){
         $teacher = User::where('userID', Auth::user()->userID)->first();
         if($teacher->status == 0){
