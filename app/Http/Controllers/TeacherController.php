@@ -58,7 +58,7 @@ class TeacherController extends Controller
         }
         //update the status
         Attendance::where('scheduleID', $scheduleID)->where('studentID', $studentID)->update(['status' => $status]);
-        return view('include.attendanceFrom')->with([
+        return view('include.attendanceForm')->with([
             'scheduleID' => $scheduleID,
             'studentID' => $studentID,
             'status' => $status,
@@ -69,7 +69,7 @@ class TeacherController extends Controller
         $scheduleID = $rq->scheduleID;
         $studentID = $rq->studentID;
         $status = $rq->status;
-        return view('include.attendanceFrom')->with([
+        return view('include.attendanceForm')->with([
             'scheduleID' => $scheduleID,
             'studentID' => $studentID,
             'status' => $status,
