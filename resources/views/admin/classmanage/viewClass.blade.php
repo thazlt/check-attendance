@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="main-content">
+<div class="main-content" onload="viewClass">
         <header>
             <h2>
                 <label for="nav-toggle">
@@ -121,7 +121,6 @@
                                         <th>ID</th>
                                         <th>Last name</th>
                                         <th>First Name</th>
-                                        <th>Check</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -138,10 +137,6 @@
                                         ?>
                                         <td>{{ $lastName }}</td>
                                         <td>{{ $firstName }}</td>
-                                        <td><button class="btn btn-danger">A</button>
-                                            <button class="btn btn-primary">P</button>
-                                            <button class="btn btn-success">V</button>
-                                            <button class="btn btn-warning">L</button></td>
                                         </td>
                                         <td>
                                             <form id="rms-{{ $class->classID }}-{{ $student->studentID }}" action="{{ url('admin/removeStudentClass') }}" method="post">
@@ -179,19 +174,7 @@
                                         <tr>
                                             @foreach ($student->schedules as $schedule)
                                                 @if ($schedule->classID == $class->classID)
-                                                    @switch($schedule->pivot->status)
-                                                        @case('A')
-                                                            <td><button class="btn btn-danger">A</button></td>                                                            @break
-                                                        @case('P')
-                                                            <td><button class="btn btn-primary">P</button></td>
-                                                            @break
-                                                        @case('V')
-                                                            <td><button class="btn btn-success">V</button></td>
-                                                            @break
-                                                        @case('L')
-                                                            <td><button class="btn btn-warning">L</button></td>
-                                                            @break
-                                                    @endswitch
+                                                    <td id="{{ 'check-'.$schedule->scheduleID.'-'.$student->studentID }}"></td>
                                                 @endif
                                             @endforeach
                                         </tr>
@@ -205,4 +188,17 @@
 
         </main>
     </div>
+    <script type="text/javascript" id="viewClass">
+        @foreach ($class->students as $student)
+            @foreach ($student->schedules as $schedule)
+                @if ($schedule->classID == $class->classID)
+                    $.get('{{ url('/views/include/attendanceForm/'.$schedule->scheduleID.'/'.$student->studentID.'/'.$schedule->pivot->status) }}', function(data, status){
+                        $("{{ '#check-'.$schedule->scheduleID.'-'.$student->studentID}}").append(data);
+                    });
+                @endif
+            @endforeach
+        @endforeach
+
+
+    </script>
 @endsection

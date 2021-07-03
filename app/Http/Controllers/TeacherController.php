@@ -19,7 +19,21 @@ class TeacherController extends Controller
         $this->middleware('auth');
     }
 
-    public function checkAtendance(Request $rq){
+    public function index(Request $rq){
+        $teacher = User::where('userID', Auth::user()->userID)->first();
+        if($teacher->status == 0){
+            $rq->session()->put('error', 'Your account is disabled. Contact admin for more info');
+            Auth::logout();
+            return redirect(url('/login'));
+        }
+        $classes = $teacher->my_classes;
+        return view('teacher.index')->with([
+            'teacher'=>$teacher,
+            'classes'=>$classes
+        ]);
+    }
+
+    public function checkAttendance(Request $rq){
         //validate
         $scheduleID = $rq->scheduleID;
         $studentID = $rq->studentID;
@@ -36,22 +50,17 @@ class TeacherController extends Controller
             $errors[]=['studentError' => 'This student is not in this class'];
         }
         //update the status
-        $attendance = Attendance::where('scheduleID', $scheduleID)->where('studentID', $studentID)->first();
-        $attendance->status = $status;
-        return $attendance->save();
+        return Attendance::where('scheduleID', $scheduleID)->where('studentID', $studentID)->update(['status' => $status]);
     }
 
-    public function index(Request $rq){
-        $teacher = User::where('userID', Auth::user()->userID)->first();
-        if($teacher->status == 0){
-            $rq->session()->put('error', 'Your account is disabled. Contact admin for more info');
-            Auth::logout();
-            return redirect(url('/login'));
-        }
-        $classes = $teacher->my_classes;
-        return view('teacher.index')->with([
-            'teacher'=>$teacher,
-            'classes'=>$classes
+    public function attendanceForm(Request $rq){
+        $scheduleID = $rq->scheduleID;
+        $studentID = $rq->studentID;
+        $status = $rq->status;
+        return view('include.attendanceFrom')->with([
+            'scheduleID' => $scheduleID,
+            'studentID' => $studentID,
+            'status' => $status,
         ]);
     }
 }
