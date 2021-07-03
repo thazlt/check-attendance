@@ -48,12 +48,11 @@ class AdminController extends Controller
         $status = $student->save();
         //create message
         if ($status) {
-            $rq->session()->put('status', 'Add student successfully');
+            $rq->session()->put('messages', ['Add student successfully']);
         }
         else{
-            $rq->session()->put('status', 'An error has occured');
+            $rq->session()->put('errors', ['An error has occured']);
         }
-
         return redirect('/admin#v-pills-students');
     }
     //create classes
@@ -72,12 +71,12 @@ class AdminController extends Controller
         $status = $class->save();
         //create message
         if ($status) {
-            $rq->session()->put('status', 'Create class successfully');
+            $rq->session()->put('messages', ['Create class successfully']);
         }
         else{
-            $rq->session()->put('status', 'An error has occured');
+            $rq->session()->put('errors', ['An error has occured']);
         }
-        return redirect('/admin');
+        return redirect('/admin#v-pills-class');
     }
     //Class Manage
     public function viewClass(Request $rq){
@@ -103,10 +102,10 @@ class AdminController extends Controller
         $teacher_class->teacherID = $rq->teacherID;
         $teacher_class->classID = $rq->classID;
         if($teacher_class->save()){
-            $rq->session()->put('status', 'Add teacher successfully');
+            $rq->session()->put('messages', ['Add teacher successfully']);
         }
         else{
-            $rq->session()->put('error', 'An error has occured');
+            $rq->session()->put('errors', ['An error has occured']);
         }
         return redirect(url('/admin/viewClass/'.$rq->classID));
     }
@@ -115,7 +114,7 @@ class AdminController extends Controller
         $classID = $rq->get('classID');
         $userID = $rq->get('userID');
         $teacher_class = TeacherClass::where('classID', $classID)->where('teacherID',$userID)->delete();
-        $rq->session()->put('status', 'Remove succesfully');
+        $rq->session()->put('messages', ['Remove succesfully']);
         return redirect("/admin/viewClass/".$classID);
     }
 
@@ -135,10 +134,10 @@ class AdminController extends Controller
         $student_class->studentID = $rq->studentID;
         $student_class->classID = $rq->classID;
         if($student_class->save()){
-            $rq->session()->put('status', 'Add student successfully');
+            $rq->session()->put('messages', ['Add student successfully']);
         }
         else{
-            $rq->session()->put('error', 'An error has occured');
+            $rq->session()->put('errors', ['An error has occured']);
         }
         //add absent attendance
         //get class's schedules
@@ -157,7 +156,7 @@ class AdminController extends Controller
         $classID = $rq->get('classID');
         $studentID = $rq->get('studentID');
         $student_class = StudentClass::where('classID', $classID)->where('studentID',$studentID)->delete();
-        $rq->session()->put('status', 'Remove succesfully');
+        $rq->session()->put('messages', ['Remove succesfully']);
         //delete all attendance
         $class = MyClass::where('classID', $classID)->first();
         $schedules = $class->schedules;

@@ -13,11 +13,7 @@
         </header>
 
         <main>
-            @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session()->pull('status') }}
-                </div>
-            @endif
+            @include('include.message')
             <div class="cards">
                 <form action="{{ url('/admin/addTeacher') }}" method='post'>
                     @csrf

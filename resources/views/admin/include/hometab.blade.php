@@ -9,6 +9,7 @@
         @include('include.nameTag')
     </header>
     <main>
+        @include('include.message')
         <div class="cards">
             <table class="content-table">
                 <thead>

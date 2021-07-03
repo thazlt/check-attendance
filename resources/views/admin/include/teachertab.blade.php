@@ -10,6 +10,7 @@
     </header>
     <main>
         <div class="cards">
+            @include('include.message')
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 

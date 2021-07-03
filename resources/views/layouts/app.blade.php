@@ -64,4 +64,6 @@
             };
         </script>
     </body>
+    <?php session()->pull('messages')?>
+    <?php session()->pull('errors')?>
 </html>
