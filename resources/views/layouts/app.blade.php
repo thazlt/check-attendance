@@ -28,11 +28,11 @@
 
     <body>
         @if (Auth::user()->userType == 0)
-            @include("layouts.include.left-bar-admin");
+            @include("layouts.include.left-bar-admin")
         @else
-            @include("layouts.include.left-bar-teacher");
+            @include("layouts.include.left-bar-teacher")
         @endif
-        @yield('content');
+        @yield('content')
         <script type="text/javascript">
             window.onload = function() {
                 var url = document.URL;
