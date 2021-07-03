@@ -19,6 +19,7 @@ class CreateStudentsTable extends Migration
             $table->date('dob');
             $table->string('email');
             $table->string('phone');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

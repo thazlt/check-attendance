@@ -5,8 +5,8 @@
     </div>
     @endforeach
 @endif
-@if (session('errors'))
-    @foreach (session('errors') as $error)
+@if (session('errorsmess'))
+    @foreach (session('errorsmess') as $error)
     <div class="alert alert-danger" role="alert">
         {{ $error }}
     </div>

@@ -71,6 +71,9 @@ Route::middleware(Admin::class)->group(function () {
     //activate and deactivate teacher
     Route::post('/admin/deactivateTeacher',[AdminController::class, 'deactivateTeacher']);
     Route::post('/admin/activateTeacher',[AdminController::class, 'activateTeacher']);
+    //activate and deactivate student
+    Route::post('/admin/deactivateStudent',[AdminController::class, 'deactivateStudent']);
+    Route::post('/admin/activateStudent',[AdminController::class, 'activateStudent']);
 });
 //Teacher routes
 Route::middleware(['auth'])->group(function () {

@@ -29,7 +29,7 @@ class Student extends Model
      * @var array
      */
     protected $hidden = [
-
+        'status',
     ];
 
     /**

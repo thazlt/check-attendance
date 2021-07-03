@@ -40,7 +40,7 @@ class TeacherController extends Controller
             $errors[] = 'This class is deactivated';
         }
         if(!empty($errors)){
-            session()->put('errors', $errors);
+            session()->put('errorsmess', $errors);
         }
         return view('teacher.classmanage.viewclass')->with([
             'class'=>$class

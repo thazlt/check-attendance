@@ -51,7 +51,7 @@ class AdminController extends Controller
             $rq->session()->put('messages', ['Add student successfully']);
         }
         else{
-            $rq->session()->put('errors', ['An error has occured']);
+            $rq->session()->put('errorsmess', ['An error has occured']);
         }
         return redirect('/admin#v-pills-students');
     }
@@ -74,7 +74,7 @@ class AdminController extends Controller
             $rq->session()->put('messages', ['Create class successfully']);
         }
         else{
-            $rq->session()->put('errors', ['An error has occured']);
+            $rq->session()->put('errorsmess', ['An error has occured']);
         }
         return redirect('/admin#v-pills-class');
     }
@@ -105,7 +105,7 @@ class AdminController extends Controller
             $rq->session()->put('messages', ['Add teacher successfully']);
         }
         else{
-            $rq->session()->put('errors', ['An error has occured']);
+            $rq->session()->put('errorsmess', ['An error has occured']);
         }
         return redirect(url('/admin/viewClass/'.$rq->classID));
     }
@@ -129,6 +129,12 @@ class AdminController extends Controller
         $rq->validate([
             'studentID'=>['required', 'exists:students,studentID', 'not_in:'.implode(',', $invalidID)],
         ]);
+        //check if student is active
+        $active = Student::where('studentID', $rq->studentID)->first()->status;
+        if(!$active){
+            $rq->session()->put('errorsmess', ['The student is deactivated']);
+            return redirect(url('/admin/viewClass/'.$rq->classID));
+        }
         //add to class
         $student_class = new StudentClass();
         $student_class->studentID = $rq->studentID;
@@ -137,7 +143,7 @@ class AdminController extends Controller
             $rq->session()->put('messages', ['Add student successfully']);
         }
         else{
-            $rq->session()->put('errors', ['An error has occured']);
+            $rq->session()->put('errorsmess', ['An error has occured']);
         }
         //add absent attendance
         //get class's schedules
@@ -232,7 +238,7 @@ class AdminController extends Controller
         $class = MyClass::where('classID','=',$rq->get('classID'))->first();
         $class->status = false;
         $class->save();
-        $rq->session()->put('status','Class '. $class->name . ' deactivated');
+        $rq->session()->put('messages',['Class '. $class->name . ' deactivated']);
         return redirect(url('/admin#v-pills-class'));
     }
     public function activateClass(Request $rq){
@@ -242,7 +248,7 @@ class AdminController extends Controller
         $class = MyClass::where('classID','=',$rq->get('classID'))->first();
         $class->status = true;
         $class->save();
-        $rq->session()->put('status','Class '. $class->name . ' activated');
+        $rq->session()->put('messages',['Class '. $class->name . ' activated']);
         return redirect(url('/admin#v-pills-class'));
     }
 
@@ -254,7 +260,7 @@ class AdminController extends Controller
         $user = User::where('userID','=',$rq->userID)->first();
         $user->status = false;
         $user->save();
-        $rq->session()->put('status','Teacher '. $user->name . ' deactivated');
+        $rq->session()->put('messages',['Teacher '. $user->name . ' deactivated']);
         return redirect(url('/admin#v-pills-teachers'));
     }
     public function activateTeacher(Request $rq){
@@ -264,7 +270,29 @@ class AdminController extends Controller
         $user = User::where('userID','=',$rq->get('userID'))->first();
         $user->status = true;
         $user->save();
-        $rq->session()->put('status','Teacher '. $user->name . ' activated');
+        $rq->session()->put('messages',['Teacher '. $user->name . ' activated']);
         return redirect(url('/admin#v-pills-teachers'));
+    }
+
+    //activate and deactivate student
+    public function deactivateStudent(Request $rq){
+        $rq->validate(
+            ['studentID' => 'exists:students,studentID',]
+        );
+        $student = Student::where('studentID','=',$rq->studentID)->first();
+        $student->status = false;
+        $student->save();
+        $rq->session()->put('messages',['Student '. $student->name . ' deactivated']);
+        return redirect(url('/admin#v-pills-students'));
+    }
+    public function activateStudent(Request $rq){
+        $rq->validate(
+            ['studentID' => 'exists:students,studentID',]
+        );
+        $student = Student::where('studentID','=',$rq->get('studentID'))->first();
+        $student->status = true;
+        $student->save();
+        $rq->session()->put('messages',['Student '. $student->name . ' activated']);
+        return redirect(url('/admin#v-pills-students'));
     }
 }

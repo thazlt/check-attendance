@@ -98,10 +98,18 @@
                         <td>{{ $student->email }}</td>
                         <td>{{ $student->phone }}</td>
                         <td>
-                            @if (true)
-                                <button class="btn btn-outline"><i class="fa fa-lock"></i></button>
+                            @if ($student->status)
+                                <form id="dc-{{ $student->studentID }}" action="{{ url('admin/deactivateStudent') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="studentID" value="{{ $student->studentID }}">
+                                    <button class="btn btn-outline" type="submit"><i class="fa fa-lock"></i></button>
+                                </form>
                             @else
-                                <button class="btn btn-outline"><i class="fa fa-lock"></i></button>
+                                <form id="dc-{{ $student->studentID }}" action="{{ url('admin/activateStudent') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="studentID" value="{{ $student->studentID }}">
+                                    <button class="btn btn-outline" type="submit"><i class="fa fa-unlock"></i></button>
+                                </form>
                             @endif
                         </td>
                         </tr>

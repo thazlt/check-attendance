@@ -65,5 +65,5 @@
         </script>
     </body>
     <?php session()->pull('messages')?>
-    <?php session()->pull('errors')?>
+    <?php session()->pull('errorsmess')?>
 </html>
