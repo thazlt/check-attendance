@@ -35,6 +35,13 @@ class TeacherController extends Controller
 
     public function viewClass(Request $rq){
         $class = MyClass::where('classID', $rq->id)->first();
+        $errors = [];
+        if(!$class->status){
+            $errors[] = 'This class is deactivated';
+        }
+        if(!empty($errors)){
+            session()->put('errors', $errors);
+        }
         return view('teacher.classmanage.viewclass')->with([
             'class'=>$class
         ]);
@@ -47,8 +54,12 @@ class TeacherController extends Controller
         $status = $rq->status;
         $teacherID  = Auth::user()->userID;
         $errors = [];
-        //check if teacher is in class
+        //check if class is locked
         $classID = Schedule::where('scheduleID', $scheduleID)->first()->classID;
+        if(!MyClass::where('classID', $classID)->first()->status){
+            $errors[]=['classError' => 'This class is deactivated'];
+        }
+        //check if teacher is in class
         if(!TeacherClass::where('classID', $classID)->where('teacherID', $teacherID)->first()){
             $errors[]=['teacherError' => 'This teacher is not allowed to check attendace in this class'];
         }
@@ -57,12 +68,15 @@ class TeacherController extends Controller
             $errors[]=['studentError' => 'This student is not in this class'];
         }
         //update the status
-        Attendance::where('scheduleID', $scheduleID)->where('studentID', $studentID)->update(['status' => $status]);
-        return view('include.attendanceForm')->with([
+        if(empty($errors)){
+            Attendance::where('scheduleID', $scheduleID)->where('studentID', $studentID)->update(['status' => $status]);
+            return view('include.attendanceForm')->with([
             'scheduleID' => $scheduleID,
             'studentID' => $studentID,
             'status' => $status,
         ]);
+        }
+        return 0;
     }
 
     public function attendanceForm(Request $rq){

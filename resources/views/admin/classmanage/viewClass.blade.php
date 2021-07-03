@@ -193,7 +193,7 @@
         function loadForms(){
             $(".attendanceForm").on('submit',function(e){
             e.preventDefault();
-            console.log("yay");
+
             var form = $(this);
             var parent = form.parent();
             var url = form.attr('action');
@@ -207,6 +207,7 @@
                     //get parent
                     parent.html(response);
                     loadForms();
+
                 }
             });
         })

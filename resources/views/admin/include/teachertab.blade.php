@@ -95,7 +95,7 @@
                     <?php $num = 1;?>
                     @foreach ($teachers as $teacher)
                     <tr>
-                        <td>{{ $num }}</td>
+                        <td>{{ $num++ }}</td>
                         <td>{{ $teacher->userID }}</td>
                         <td>{{ $teacher->name }}</td>
                         <td>{{ $teacher->email }}</td>

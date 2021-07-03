@@ -13,11 +13,7 @@
         </header>
 
         <main>
-            @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session()->pull('status') }}
-                </div>
-            @endif
+            @include('include.message')
             <div class="cards">
                 <div class="container">
                     <div class="row">
@@ -27,12 +23,7 @@
                         <div class="col-md-6">
                             <h5>LECTURER:
                                 @foreach ($class->teachers as $teacher)
-                                    <span>{{ $teacher->name }}<button class="btn btn-outline" type="submit" form="rmt-{{ $class->classID.'-'.$teacher->userID }}"><i class="fa fa-trash"></i></button></span>
-                                    <form id="rmt-{{ $class->classID.'-'.$teacher->userID }}" action="{{ url('admin/removeTeacher') }}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="classID" value="{{ $class->classID }}">
-                                        <input type="hidden" name="userID" value="{{ $teacher->userID }}">
-                                    </form>
+                                    <span>{{ $teacher->name }}</span>
                                 @endforeach
                             </h5>
                         </div>
@@ -56,7 +47,6 @@
                                         <th>ID</th>
                                         <th>Last name</th>
                                         <th>First Name</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,15 +62,6 @@
                                         ?>
                                         <td>{{ $lastName }}</td>
                                         <td>{{ $firstName }}</td>
-                                        </td>
-                                        <td>
-                                            <form id="rms-{{ $class->classID }}-{{ $student->studentID }}" action="{{ url('admin/removeStudentClass') }}" method="post">
-                                                @csrf
-                                                <input type="hidden" name="classID" value="{{ $class->classID }}">
-                                                <input type="hidden" name="studentID" value="{{ $student->studentID }}">
-                                            </form>
-                                            <button class="btn btn-outline" type="submit" form="rms-{{ $class->classID }}-{{ $student->studentID }}"><i class="fa fa-trash"></i></button>
-                                        </td>
                                     </tr>
                                     <?php $num++?>
                                     @endforeach
@@ -93,13 +74,7 @@
                                     <tr>
                                         @foreach ($class->schedules->sortBy('date') as $schedule)
                                            <th>
-                                               <form id="rmsc-{{ $class->classID }}-{{ $schedule->scheduleID }}" action="{{ url('admin/removeSchedule') }}" method="post">
-                                                    @csrf
-                                                    <input type="hidden" name="classID" value="{{ $class->classID }}">
-                                                    <input type="hidden" name="scheduleID" value="{{ $schedule->scheduleID }}">
-                                                </form>
                                                {{ $schedule->date->toDateString('d-m-Y') }}
-                                               <button class="btn" type="submit" form="rmsc-{{ $class->classID }}-{{ $schedule->scheduleID }}"><i class="fa fa-trash"></i></button>
                                             </th>
                                         @endforeach
                                     </tr>
@@ -153,8 +128,10 @@
                 success: function (response) {
                     //update button
                     //get parent
-                    parent.html(response);
-                    loadForms();
+                    if(respone!=='0'){
+                        parent.html(response);
+                        loadForms();
+                    }
                 }
             });
         })
