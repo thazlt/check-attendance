@@ -91,8 +91,21 @@
                                 {{ $teacher->name.", " }}
                             @endforeach
                             </td>
-                            <td><button class="btn btn-outline" onclick="location.href='{{ url('/admin/viewClass/'.$class->classID) }}'"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-outline"><i class="fa fa-trash"></i></button></td>
+                            <td>
+                                @if ($class->status)
+                                    <form id="dc-{{ $class->classID }}" action="{{ url('admin/deactivateClass') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="classID" value="{{ $class->classID }}">
+                                        <button class="btn btn-outline" type="submit"><i class="fa fa-lock"></i></button>
+                                    </form>
+                                @else
+                                    <form id="dc-{{ $class->classID }}" action="{{ url('admin/activateClass') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="classID" value="{{ $class->classID }}">
+                                        <button class="btn btn-outline" type="submit"><i class="fa fa-unlock"></i></button>
+                                    </form>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

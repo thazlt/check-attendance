@@ -100,9 +100,21 @@
                         <td>{{ $teacher->name }}</td>
                         <td>{{ $teacher->email }}</td>
                         <td>{{ $teacher->phone }}</td>
-                        <td><button class="btn btn-outline" onclick="location.href='checkatt.html';"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-outline"><i class="fa fa-trash"></i>
-                            <button class="btn btn-outline"><i class="fa fa-lock"></i></button></td>
+                        <td>
+                            @if ($teacher->status)
+                                <form id="dt-{{ $teacher->userID }}" action="{{ url('admin/deactivateTeacher') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="userID" value="{{ $teacher->userID }}">
+                                    <button class="btn btn-outline" type="submit"><i class="fa fa-lock"></i></button>
+                                </form>
+                            @else
+                                <form id="dt-{{ $teacher->userID }}" action="{{ url('admin/activateTeacher') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="userID" value="{{ $teacher->userID }}">
+                                    <button class="btn btn-outline" type="submit"><i class="fa fa-unlock"></i></button>
+                                </form>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

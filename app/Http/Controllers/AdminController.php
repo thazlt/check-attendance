@@ -233,7 +233,7 @@ class AdminController extends Controller
         $class->status = false;
         $class->save();
         $rq->session()->put('status','Class '. $class->name . ' deactivated');
-        return redirect(url('/admin/viewClass/'.$rq->classID));
+        return redirect(url('/admin#v-pills-class'));
     }
     public function activateClass(Request $rq){
         $rq->validate(
@@ -243,7 +243,7 @@ class AdminController extends Controller
         $class->status = true;
         $class->save();
         $rq->session()->put('status','Class '. $class->name . ' activated');
-        return redirect(url('/admin/viewClass/'.$rq->classID));
+        return redirect(url('/admin#v-pills-class'));
     }
 
     //activate and deactivate teacher
@@ -251,11 +251,11 @@ class AdminController extends Controller
         $rq->validate(
             ['userID' => 'exists:users,userID',]
         );
-        $user = User::where('userID','=',$rq->get('userID'))->first();
+        $user = User::where('userID','=',$rq->userID)->first();
         $user->status = false;
         $user->save();
         $rq->session()->put('status','Teacher '. $user->name . ' deactivated');
-        return redirect(url('/admin/viewTeachers'));
+        return redirect(url('/admin#v-pills-teachers'));
     }
     public function activateTeacher(Request $rq){
         $rq->validate(
@@ -265,6 +265,6 @@ class AdminController extends Controller
         $user->status = true;
         $user->save();
         $rq->session()->put('status','Teacher '. $user->name . ' activated');
-        return redirect(url('/admin/viewTeachers'));
+        return redirect(url('/admin#v-pills-teachers'));
     }
 }

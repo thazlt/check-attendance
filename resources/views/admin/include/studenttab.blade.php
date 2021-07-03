@@ -97,8 +97,13 @@
                         <td>{{ $student->name }}</td>
                         <td>{{ $student->email }}</td>
                         <td>{{ $student->phone }}</td>
-                        <td><button class="btn btn-outline" onclick="location.href='checkatt.html';"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-outline"><i class="fa fa-trash"></i></button></td>
+                        <td>
+                            @if (true)
+                                <button class="btn btn-outline"><i class="fa fa-lock"></i></button>
+                            @else
+                                <button class="btn btn-outline"><i class="fa fa-lock"></i></button>
+                            @endif
+                        </td>
                         </tr>
                     @endforeach
                 </tbody>
