@@ -33,6 +33,13 @@ class TeacherController extends Controller
         ]);
     }
 
+    public function viewClass(Request $rq){
+        $class = MyClass::where('classID', $rq->id)->first();
+        return view('teacher.classmanage.viewClass')->with([
+            'class'=>$class
+        ]);
+    }
+
     public function checkAttendance(Request $rq){
         //validate
         $scheduleID = $rq->scheduleID;

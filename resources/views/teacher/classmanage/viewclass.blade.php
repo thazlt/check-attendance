@@ -19,62 +19,6 @@
                 </div>
             @endif
             <div class="cards">
-                <form action="{{ url('/admin/addTeacher') }}" method='post'>
-                    @csrf
-                    <div class="form-group row">
-                        <label for="teacherID" class="col-md-4 col-form-label text-md-right">{{ __('Add new Teacher') }}</label>
-                        <input id="teacherID" type="text" class="form-control @error('teacherID') is-invalid @enderror" name="teacherID" required placeholder="Teacher ID">
-                            @error('teacherID')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                    </div>
-                    <input type="hidden" name="classID" value="{{ $class->classID }}">
-                    <div class="form-group">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Add') }}
-                            </button>
-                    </div>
-                </form>
-                <form action="{{ url('/admin/addStudentClass') }}" method='post'>
-                    @csrf
-                    <div class="form-group row">
-                        <label for="studentID" class="col-md-4 col-form-label text-md-right">{{ __('Add new Student') }}</label>
-                        <input id="studentID" type="text" class="form-control @error('studentID') is-invalid @enderror" name="studentID" required placeholder="Student ID">
-                            @error('studentID')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                    </div>
-                    <div class="form-group">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Add') }}
-                            </button>
-                    </div>
-                    <input type="hidden" name="classID" value="{{ $class->classID }}">
-                </form>
-                <form action="{{ url('/admin/addSchedule') }}" method='post'>
-                    @csrf
-                    <div class="form-group row">
-                        <label for="date" class="col-md-4 col-form-label text-md-right">{{ __('Add a Date') }}</label>
-                        <input id="date" type="text" class="form-control @error('date') is-invalid @enderror" name="date" required placeholder="Date">
-                            @error('date')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                    </div>
-                    <div class="form-group">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Add') }}
-                            </button>
-                    </div>
-                    <input type="hidden" name="classID" value="{{ $class->classID }}">
-                </form>
-            </div>
-            <div class="cards">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6">
@@ -148,15 +92,15 @@
                                 <thead>
                                     <tr>
                                         @foreach ($class->schedules->sortBy('date') as $schedule)
-                                           <td>
+                                           <th>
                                                <form id="rmsc-{{ $class->classID }}-{{ $schedule->scheduleID }}" action="{{ url('admin/removeSchedule') }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="classID" value="{{ $class->classID }}">
                                                     <input type="hidden" name="scheduleID" value="{{ $schedule->scheduleID }}">
                                                 </form>
                                                {{ $schedule->date->toDateString('d-m-Y') }}
-                                               <button class="btn btn-outline" type="submit" form="rmsc-{{ $class->classID }}-{{ $schedule->scheduleID }}"><i class="fa fa-trash"></i></button>
-                                            </td>
+                                               <button class="btn" type="submit" form="rmsc-{{ $class->classID }}-{{ $schedule->scheduleID }}"><i class="fa fa-trash"></i></button>
+                                            </th>
                                         @endforeach
                                     </tr>
                                 </thead>

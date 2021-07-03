@@ -1,7 +1,7 @@
 <div class="user-wrapper">
-    <img src="../pics/user.svg" width="30px" height="30px" alt="">
+    <img src="{{ asset('images/main.png') }}" width="60px" height="60px" alt="">
     <div>
         <h4>{{ Auth::user()->name }}</h4>
-        <small>{{ !Auth::user()->role? 'Admin' : 'Teacher' }}</small>
+        <small>{{ Auth::user()->type? 'Admin' : 'Teacher' }}</small>
     </div>
 </div>

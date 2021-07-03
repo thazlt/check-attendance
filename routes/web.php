@@ -78,6 +78,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/checkAttendance', [TeacherController::class, 'checkAttendance']);
     //get views
     Route::get('/views/include/attendanceForm/{scheduleID}/{studentID}/{status}', [TeacherController::class, 'attendanceForm']);
+    //view class
+    Route::get('/teacher/viewClass/{id}', [TeacherController::class, 'viewClass']);
 });
 
 Auth::routes();

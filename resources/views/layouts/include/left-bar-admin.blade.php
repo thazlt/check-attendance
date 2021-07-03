@@ -2,7 +2,7 @@
     <div class="sidebar">
         <div class="sidebar-brand">
             <h2>
-                <img src="{{ asset("images/main.png") }}" style="width: 50px">
+                <img src="{{ asset("images/main.png") }}" style="width: 60px">
                 <span>ACW</span>
             </h2>
         </div>

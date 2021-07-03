@@ -377,3 +377,6 @@ li:hover {
        grid-template-columns: 100%;
    }
 }
+th {
+    height: 62px;
+}
