@@ -50,7 +50,12 @@ class TeacherController extends Controller
             $errors[]=['studentError' => 'This student is not in this class'];
         }
         //update the status
-        return Attendance::where('scheduleID', $scheduleID)->where('studentID', $studentID)->update(['status' => $status]);
+        Attendance::where('scheduleID', $scheduleID)->where('studentID', $studentID)->update(['status' => $status]);
+        return view('include.attendanceFrom')->with([
+            'scheduleID' => $scheduleID,
+            'studentID' => $studentID,
+            'status' => $status,
+        ]);
     }
 
     public function attendanceForm(Request $rq){
