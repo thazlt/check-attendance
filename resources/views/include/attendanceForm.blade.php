@@ -1,4 +1,12 @@
-<form class="attendanceForm" id="{{ 'form-check-'.$scheduleID.'-'.$studentID }}" action="{{ url('/checkAttendance') }}" method="POST">
+<form class="attendanceForm" id="{{ 'form-check-'.$scheduleID.'-'.$studentID }}"
+action="
+@if (Auth::user()->userType == 1)
+    {{ url('/checkAttendance') }}
+@else
+    {{ url('/admin/checkAttendance') }}
+@endif
+"
+ method="POST">
     @csrf
     @method('put')
     <input type="hidden" name="scheduleID" value="{{ $scheduleID }}">

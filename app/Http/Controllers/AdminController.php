@@ -12,6 +12,7 @@ use App\Models\TeacherClass;
 use App\Models\User;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -221,14 +222,30 @@ class AdminController extends Controller
 
     //check attendance
     public function checkAttendance(Request $rq){
-        $classID = $rq->classID;
+        //validate
+        $scheduleID = $rq->scheduleID;
         $studentID = $rq->studentID;
-        $scheduleID = $rq->scheculeID;
         $status = $rq->status;
-        $attendance = Attendance::where('scheduleID', $scheduleID)->where('studentID', $studentID)->first();
-        $attendance->status = $status;
-        $attendance->save();
-        return redirect("/admin/viewClass/".$classID);
+        $errors = [];
+        // //check if class is locked
+        // $classID = Schedule::where('scheduleID', $scheduleID)->first()->classID;
+        // if(!MyClass::where('classID', $classID)->first()->status){
+        //     $errors[]=['classError' => 'This class is deactivated'];
+        // }
+        // //check if student is in class
+        // if(!StudentClass::where('studentID', $studentID)->where('classID', $classID)->first()){
+        //     $errors[]=['studentError' => 'This student is not in this class'];
+        // }
+        //update the status
+        if(empty($errors)){
+            Attendance::where('scheduleID', $scheduleID)->where('studentID', $studentID)->update(['status' => $status]);
+            return view('include.attendanceForm')->with([
+            'scheduleID' => $scheduleID,
+            'studentID' => $studentID,
+            'status' => $status,
+        ]);
+        }
+        return 0;
     }
 
     public function deactivateClass(Request $rq){

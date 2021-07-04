@@ -63,7 +63,7 @@ Route::middleware(Admin::class)->group(function () {
     Route::post('/admin/removeSchedule', [AdminController::class, 'removeSchedule']);
 
     //Checking attendance
-    Route::post('/admin/checkAttendance', [AdminController::class, 'checkAttendance']);
+    Route::put('/admin/checkAttendance', [AdminController::class, 'checkAttendance']);
 
     //activate and deactivate class
     Route::post('/admin/deactivateClass',[AdminController::class, 'deactivateClass']);
