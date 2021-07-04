@@ -245,7 +245,7 @@ class AdminController extends Controller
             'status' => $status,
         ]);
         }
-        return 0;
+        abort(403);
     }
 
     public function deactivateClass(Request $rq){

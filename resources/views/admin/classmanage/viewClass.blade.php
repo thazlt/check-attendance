@@ -217,9 +217,8 @@
                     //get parent
                     parent.html(response);
                     loadForms();
-
-                }
-            });
+                    }
+                });
             }
             catch(err){
                 console.log(err);
