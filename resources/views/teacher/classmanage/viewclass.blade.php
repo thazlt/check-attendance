@@ -99,41 +99,51 @@
         </main>
     </div>
     <script type="text/javascript" id="viewClass">
-        function loadButtons(){
+        async function  loadButtons(){
             console.log('loaded');
             //load checking buttons
             @foreach ($class->students as $student)
                 @foreach ($student->schedules as $schedule)
                     @if ($schedule->classID == $class->classID)
-                        $.get('{{ url('/views/include/attendanceForm/'.$schedule->scheduleID.'/'.$student->studentID.'/'.$schedule->pivot->status) }}', function(data, status){
+                        await $.get('{{ url('/views/include/attendanceForm/'.$schedule->scheduleID.'/'.$student->studentID.'/'.$schedule->pivot->status) }}', function(data, status){
                             $("{{ '#check-'.$schedule->scheduleID.'-'.$student->studentID}}").html(data)
                         });
                     @endif
                 @endforeach
             @endforeach
-            setTimeout(() => {  loadForms(); console.log('ready'); }, 2000);
+            loadForms();
+            // setTimeout(() => {  loadForms(); console.log('ready'); }, 500);
         }
+
+
+
         function loadForms(){
-            $(".attendanceForm").on('submit',function(e){
+            $(".attendanceForm").on('submit', async function(e){
             e.preventDefault();
-            console.log("yay");
+
             var form = $(this);
             var parent = form.parent();
             var url = form.attr('action');
-
-            $.ajax({
+            try{
+                console.log('hi1');
+                await $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 type: "POST",
                 url: url,
                 data: form.serialize(),
                 success: function (response) {
                     //update button
                     //get parent
-                    if(respone!=='0'){
-                        parent.html(response);
-                        loadForms();
+                    parent.html(response);
+                    loadForms();
                     }
-                }
-            });
+                });
+            }
+            catch(err){
+                console.log(err);
+            }
         })
         }
         loadButtons();
