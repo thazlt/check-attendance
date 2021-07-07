@@ -144,15 +144,15 @@
                                 <thead>
                                     <tr>
                                         @foreach ($class->schedules->sortBy('date') as $schedule)
-                                           <td>
+                                           <th>
                                                <form id="rmsc-{{ $class->classID }}-{{ $schedule->scheduleID }}" action="{{ url('admin/removeSchedule') }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="classID" value="{{ $class->classID }}">
                                                     <input type="hidden" name="scheduleID" value="{{ $schedule->scheduleID }}">
                                                 </form>
-                                               {{ $schedule->date->toDateString('d-m-Y') }}
+                                               {{ $schedule->date->format('d/m') }}
                                                <button class="btn btn-outline" type="submit" form="rmsc-{{ $class->classID }}-{{ $schedule->scheduleID }}"><i class="fa fa-trash"></i></button>
-                                            </td>
+                                            </th>
                                         @endforeach
                                     </tr>
                                 </thead>

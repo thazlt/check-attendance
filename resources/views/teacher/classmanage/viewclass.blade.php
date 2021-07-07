@@ -74,7 +74,7 @@
                                     <tr>
                                         @foreach ($class->schedules->sortBy('date') as $schedule)
                                            <th>
-                                               {{ $schedule->date->toDateString('d-m-Y') }}
+                                               {{ $schedule->date->format('d/m') }}
                                             </th>
                                         @endforeach
                                     </tr>
