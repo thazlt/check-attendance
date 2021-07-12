@@ -6,6 +6,8 @@ Link: http://acwa-itec.herokuapp.com/
 Default admin account: admin@acwa.com, Password: adminacwa
 
 As admin you can use all the functionality of the website.
+
+Important: you should only check attendance when all the buttons have loaded.
 ## Installation
 1. First, you must download and install compser: https://getcomposer.org/
 2. Then you must have WAMP (for windows) or LAMP (for linux) in this tutorial, we assume you use WAMP. You can do the same with LAMP.
