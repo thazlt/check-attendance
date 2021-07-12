@@ -1,5 +1,11 @@
 # ACWA
 ACWA is an attendance checking web application for education centers.
+## Product Demo
+Link: http://acwa-itec.herokuapp.com/
+
+Default admin account: admin@acwa.com, Password: adminacwa
+
+As admin you can use all the functionality of the website.
 ## Installation
 1. First, you must download and install compser: https://getcomposer.org/
 2. Then you must have WAMP (for windows) or LAMP (for linux) in this tutorial, we assume you use WAMP. You can do the same with LAMP.
@@ -8,7 +14,10 @@ ACWA is an attendance checking web application for education centers.
 5. You must also have the latest version of Node.js:
 https://nodejs.org/en/
 ## Configuration
-1. .env: Edit enviromental variables as following:
+1. .env:
+
+
+Edit enviromental variables as following:
 +  APP_URL: default URL for the web
 + DB_DATABASE: name of the database you created
 + DB_USERNAME: username you use to sign in phpMyAdmin (default: root)
@@ -40,3 +49,10 @@ Open resources/css/app.css and edit there. Then in a terminal run:
 npm install
 npm run dev
 ```
+## Usage:
+### Default accounts:
+Admin account:
+
+email: admin@acwa.com
+
+password: adminacwa
